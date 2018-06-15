@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage('Unit Test') {
             steps {
+                sh 'composer install --no-interaction'
                 sh './vendor/bin/phpcs -n --standard=phpcs.xml'
                 sh './vendor/bin/phpmd app text phpmd.xml'
 
