@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+    stages {
+        stage('Unit Test') {
+            steps {
+                sh './vendor/bin/phpcs -n --standard=phpcs.xml'
+                sh './vendor/bin/phpmd app text phpmd.xml'
+
+                echo 'Test Successfull...'
+            }
+        }
+    }
+    post {
+        success {
+            echo 'build is success!!!'
+
+           // echo 'post to slack!'
+            //slackSend color: "#3399ff", channel:"#服のpf-at-backend-noti", message: "Unittest Success: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+
+            // FIXME 下流jobのbuild。スニペットいただける。スニペットの中身がどういうものでどう設定するかは未。 vender jenkinsとslack用に分岐したい。
+//            echo 'Build Send Slack Job.'
+//            build '../jobName1'
+        }
+        failure {
+            echo 'build is failure!!!'
+
+            //echo 'post to slack!'
+          //  slackSend color: "#ff3366", channel:"#服のpf-at-backend-noti", message: "Unittest Failure: ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+
+            // FIXME 下流jobのbuild。スニペットいただける。スニペットの中身がどういうものでどう設定するかは未。 vender jenkinsとslack用に分岐したい。
+//            echo 'Build Send Slack Job.'
+//            build '../jobName1'
+        }
+    }
+}
