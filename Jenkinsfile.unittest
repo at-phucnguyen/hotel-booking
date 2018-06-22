@@ -3,6 +3,9 @@ pipeline {
     stages {
         stage('Unit Test') {
             steps {
+                sh 'php -r "readfile('https://getcomposer.org/installer');" | php'
+                sh 'sudo chmod +x ./composer.phar'
+                sh 'sudo cp ./composer.phar /usr/local/bin/composer'
                 sh 'composer install --no-interaction'
                 sh './vendor/bin/phpcs -n --standard=phpcs.xml'
                 sh './vendor/bin/phpmd app text phpmd.xml'
